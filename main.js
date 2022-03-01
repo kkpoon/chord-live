@@ -2,11 +2,11 @@ const notes = new Set();
 
 function onMIDIMessage(event) {
   if (event.data.length > 1) {
+    const { data } = event;
+    
     if (data[0] !== 128 || data[0] != 144) {
       return;
     }
-
-    const { data } = event;
 
     const note = Midi.midiToNoteName(data[1], { pitchClass: true });
 
