@@ -1,6 +1,22 @@
+const notes = new Set();
+
 function onMIDIMessage(event) {
   if (event.data.length > 1) {
-    console.log(event.data);
+    if (data[0] !== 128 || data[0] != 144) {
+      return;
+    }
+
+    const { data } = event;
+
+    const note = Midi.midiToNoteName(data[1], { pitchClass: true });
+
+    if (data[0] === 144) {
+      notes.add(note);
+    } else if (data[0] === 128) {
+      notes.delete(note);
+    }
+
+    console.log(Tonal.ChordDetect.detect(Array.from(notes)));
   }
 }
 
