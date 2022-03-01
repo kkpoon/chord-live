@@ -4,7 +4,7 @@ function onMIDIMessage(event) {
   if (event.data.length > 1) {
     const { data } = event;
     
-    if (data[0] !== 128 || data[0] != 144) {
+    if (data[0] !== 128 && data[0] !== 144) {
       return;
     }
 
