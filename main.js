@@ -16,7 +16,7 @@ function onMIDIMessage(event) {
       notes.delete(note);
     }
 
-    console.log(Tonal.ChordDetect.detect(Array.from(notes)));
+    console.log(Tonal.Chord.detect(Array.from(notes)));
   }
 }
 
