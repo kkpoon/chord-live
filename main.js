@@ -8,7 +8,7 @@ function onMIDIMessage(event) {
       return;
     }
 
-    const note = Midi.midiToNoteName(data[1], { pitchClass: true });
+    const note = Tonal.Midi.midiToNoteName(data[1], { pitchClass: true });
 
     if (data[0] === 144) {
       notes.add(note);
