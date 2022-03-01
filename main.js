@@ -1,5 +1,7 @@
 function onMIDIMessage(event) {
-  console.log(event);
+  if (event.data.length > 1) {
+    console.log(event.data);
+  }
 }
 
 (() => {
