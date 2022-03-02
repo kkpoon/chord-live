@@ -50,7 +50,7 @@ function drawScore() {
   
   system
     .addStave({
-      voices: Array.from(notes).map(n => score.voice(score.notes(n))),
+      voices: Array.from(notes).map(n => score.voice(score.notes(`${n}/4`))),
     })
     .addClef('treble');
   
