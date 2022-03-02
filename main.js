@@ -1,3 +1,4 @@
+const noteNames = new Set();
 const notes = new Set();
 
 function onMIDIMessage(event) {
@@ -11,19 +12,22 @@ function onMIDIMessage(event) {
     return;
   }
 
-  const note = Tonal.Midi.midiToNoteName(data[1], { pitchClass: true });
+  const noteName = Tonal.Midi.midiToNoteName(data[1], { pitchClass: true });
+  const note = Tonal.Midi.midiToNoteName(data[1]);
 
   if (data[0] === 144) {
+    noteNames.add(noteName);
     notes.add(note);
   } else if (data[0] === 128) {
-    notes.delete(note);
+    noteNames.delete(noteName);
+    notes.delete(node);
   }
 
-  const possibleChords = Tonal.Chord.detect(Array.from(notes));
+  const possibleChords = Tonal.Chord.detect(Array.from(noteNames));
 
   if (possibleChords.length !== 0) {
     const [heroChord, ...otherChord] = possibleChords;
-    
+
     document.querySelectorAll(".hero-chord").forEach(el => {
       el.textContent = heroChord;
     });
@@ -32,6 +36,27 @@ function onMIDIMessage(event) {
       el.textContent = otherChord;
     });
   }
+
+  drawScore();
+}
+
+function drawScore() {
+  const vf = new Vex.Flow.Factory({
+    renderer: { elementId: 'score', width: 500, height: 200 },
+  });
+  
+  const score = vf.EasyScore();
+  const system = vf.System();
+  
+  system
+    .addStave({
+      voices: [
+        score.voice(score.noteNames(Array.from(notes).join(","))),
+      ],
+    })
+    .addClef('treble');
+  
+  vf.draw();
 }
 
 (() => {
