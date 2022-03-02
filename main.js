@@ -20,7 +20,7 @@ function onMIDIMessage(event) {
     notes.add(note);
   } else if (data[0] === 128) {
     noteNames.delete(noteName);
-    notes.delete(node);
+    notes.delete(note);
   }
 
   const possibleChords = Tonal.Chord.detect(Array.from(noteNames));
@@ -50,7 +50,7 @@ function drawScore() {
   
   system
     .addStave({
-      voices: Array.from(notes).map(n => score.voice(score.notes(`${n}/4`))),
+      voices: Array.from(notes).map(n => score.voice(score.notes(`${n}/w`))),
     })
     .addClef('treble');
   
